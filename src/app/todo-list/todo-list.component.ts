@@ -5,6 +5,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TodoListItemComponent } from '../todo-list-item/todo-list-item.component';
+import { TodoTasks } from '../../data-todoTasks';
 
 interface TodoTask {
   task: string;
@@ -14,11 +16,20 @@ interface TodoTask {
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TodoListItemComponent],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
 })
 export class TodoListComponent {
+  todotasks = TodoTasks;
+  onClickDel(value: string) {
+    console.log('on click del.. id ::' + value);
+  }
+
+  onCheckedChange(value: boolean) {
+    console.log('on change checked.. id ::' + value);
+  }
+
   taskForm: FormGroup;
 
   todoTask: TodoTask[] = [];
