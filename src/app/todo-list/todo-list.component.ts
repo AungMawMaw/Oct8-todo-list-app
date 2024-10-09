@@ -25,31 +25,25 @@ interface TodoTask {
   styleUrl: './todo-list.component.css',
 })
 export class TodoListComponent {
-  todolist = TodoTasks;
+  constructor(private todoservice: ServiceTodoLists) {}
+  // todolist = TodoTasks;
+  get todolist() {
+    return this.todoservice.getAllTodoList();
+  }
 
   onClickDel(value: string) {
     console.log('on click del.. id ::' + value);
-    this.todolist = this.todolist.filter((todolist) => todolist.id !== value);
+    // this.todolist = this.todolist.filter((todolist) => todolist.id !== value);
+    this.todoservice.deleteTodo(value);
   }
   //
   onCheckedChange(data: TodoList) {
-    console.log('on change checked.. id ::' + { ...data });
-    this.todolist = this.todolist.map((todolist) =>
-      todolist.id === data.id
-        ? { ...todolist, completed: data.completed }
-        : todolist,
-    );
+    this.todoservice.updateCompletedTodo(data); // child hmar injact nae use ya tae..
   }
   onClickAdd(data: TodoList) {
     console.log('on change checked.. id ::' + data.name);
-    // let tmp: TodoList = {
-    //   id: new Date().getTime().toString(),
-    //   userId: this.id,
-    //   title: newTask.title,
-    //   summary: newTask.summary,
-    //   dueDate: newTask.dueDate,
-    // };
-    this.todolist.push(data);
+    // this.todolist.push(data);
+    this.todoservice.AddTodo(data);
   }
 
   //

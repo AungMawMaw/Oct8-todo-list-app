@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { TodoList } from './todo-list.model';
 
+@Injectable({ providedIn: 'root' })
 export class ServiceTodoLists {
-  @Injectable({ providedIn: 'root' })
-  private TodoTasks: TodoList[] = [
+  private TodoList: TodoList[] = [
     {
       id: '1',
       name: 'task1',
@@ -42,6 +42,24 @@ export class ServiceTodoLists {
     },
   ];
   getAllTodoList() {
-    return [...this.TodoTasks];
+    return [...this.TodoList];
+  }
+
+  deleteTodo(value: string) {
+    // console.log('on click del.. id ::' + value);
+    this.TodoList = this.TodoList.filter((todolist) => todolist.id !== value);
+  }
+  //
+  updateCompletedTodo(data: TodoList) {
+    console.log('on change checked.. id ::' + { ...data });
+    this.TodoList = this.TodoList.map((todolist) =>
+      todolist.id === data.id
+        ? { ...todolist, completed: data.completed }
+        : todolist,
+    );
+  }
+  AddTodo(data: TodoList) {
+    console.log('on change checked.. id ::' + data.name);
+    this.TodoList.push(data);
   }
 }
